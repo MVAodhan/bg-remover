@@ -35,6 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@upstash/qstash": "^0.3.6",
 		"busboy": "^1.6.0",
 		"replicate": "^0.12.3"
 	}
