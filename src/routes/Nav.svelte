@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { userStore } from '$lib/supabase';
 	import DrawerNav from './/components/DrawerNav.svelte';
 
 	export let supabase: SupabaseClient;
 
-	import '../app.css';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	async function signInWithGitHub() {
@@ -15,6 +15,8 @@
 	const handleSignOut = async () => {
 		await supabase.auth.signOut();
 	};
+
+	$: avatarUrl = $userStore?.user_metadata.avatar_url;
 </script>
 
 <nav>
@@ -28,22 +30,25 @@
 				<div class="drawer-content">
 					<!-- Page content here -->
 
-					<label for="my-drawer-4" class="drawer-button">
-						<div class="avatar">
-							<div class="w-10 rounded-full">
-								<img class="w-12 rounded-full" alt="avatar" />
+					{#if $userStore}
+						<label for="my-drawer-4" class="drawer-button">
+							<div class="avatar">
+								<div class="w-10 rounded-full">
+									<img class="w-12 rounded-full" alt="avatar" src={avatarUrl} />
+								</div>
 							</div>
-						</div>
-					</label>
+						</label>
+					{/if}
 
-					<button class="btn" on:click={handleSignOut}>Sign out</button>
-					<button class="btn" on:click={signInWithGitHub}>Sign in with Github</button>
+					{#if !$userStore}
+						<button class="btn" on:click={signInWithGitHub}>Sign in with Github</button>
+					{/if}
 				</div>
 				<div class="drawer-side">
 					<label for="my-drawer-4" class="drawer-overlay" />
 					<div class="menu p-4 w-80 h-full bg-base-200 text-base-content">
 						<!-- Sidebar content here -->
-						<DrawerNav />
+						<DrawerNav {handleSignOut} />
 					</div>
 				</div>
 			</div>

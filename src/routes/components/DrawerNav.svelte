@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { userStore } from '$lib/supabase';
 
 	function handleDrawerClose() {
 		const toggle = document.getElementById('my-drawer-4');
@@ -7,6 +8,10 @@
 			toggle.click();
 		}
 	}
+
+	export let handleSignOut: () => void;
+
+	$: avatarUrl = $userStore?.user_metadata.avatar_url;
 </script>
 
 <div class="flex flex-col justify-between h-full">
@@ -14,7 +19,7 @@
 		<button on:click={handleDrawerClose}>
 			<div class="avatar">
 				<div class="w-10 rounded-full">
-					<img class="w-12 rounded-full" alt="avatar" />
+					<img class="w-12 rounded-full" src={avatarUrl} alt="avatar" />
 				</div>
 			</div>
 		</button>
@@ -43,6 +48,7 @@
 		<button
 			class="btn btn-ghost w-full"
 			on:click={async () => {
+				handleSignOut();
 				handleDrawerClose();
 			}}>Sign Out</button
 		>
