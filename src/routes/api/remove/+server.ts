@@ -1,4 +1,5 @@
 import type { RequestHandler } from './$types';
+import { error, json } from '@sveltejs/kit';
 
 import Replicate from 'replicate';
 
@@ -8,7 +9,12 @@ const replicate = new Replicate({
 	auth: REPLICATE_API_KEY
 });
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, locals: { supabase, getSession } }) => {
+	const session = await getSession();
+	if (!session) {
+		// the user is not signed in
+		throw error(401, { message: 'Unauthorized' });
+	}
 	const body = await request.json();
 
 	const output = await replicate.run(
@@ -20,9 +26,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 	);
 
-	return new Response(
-		JSON.stringify({
-			image: output
-		})
-	);
+	return json({
+		image: output
+	});
 };

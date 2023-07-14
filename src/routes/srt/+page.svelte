@@ -1,5 +1,4 @@
 <script lang="ts">
-	let previewURL: string;
 	async function makeRequest(e: any) {
 		const res = await fetch('/api/srt', {
 			method: 'POST',
