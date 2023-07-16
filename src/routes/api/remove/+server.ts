@@ -11,7 +11,13 @@ const replicate = new Replicate({
 
 export const POST: RequestHandler = async ({ request, locals: { supabase, getSession } }) => {
 	const session = await getSession();
-	if (!session) {
+
+	const { data: profile } = await supabase
+		.from('profiles')
+		.select('*')
+		.eq('id', session?.user.id)
+		.single();
+	if (!session || profile.credits <= 0) {
 		// the user is not signed in
 		throw error(401, { message: 'Unauthorized' });
 	}
@@ -25,6 +31,24 @@ export const POST: RequestHandler = async ({ request, locals: { supabase, getSes
 			}
 		}
 	);
+
+	if (output) {
+		const credits = profile.credits;
+		const newCredits = credits - 1;
+
+		const { data, error } = await supabase
+			.from('profiles')
+			.update({ credits: newCredits })
+			.eq('id', profile.id)
+			.select();
+
+		if (data) {
+			console.log(data);
+		}
+		if (error) {
+			console.log(error);
+		}
+	}
 
 	return json({
 		image: output

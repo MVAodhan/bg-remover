@@ -16,7 +16,6 @@
 				}
 			});
 			const data = await res.json();
-			console.log(data);
 			removedBgURL = data.image;
 		};
 
@@ -35,33 +34,31 @@
 	}
 </script>
 
-<section class="w-4/5 h-full flex flex-col justify-center items-center">
-	<div class="flex w-full">
-		{#if previewURL}
-			<div class="w-1/2 flex justify-end pr-16">
-				<img src={previewURL} alt="photoURL" width="256" height="256" />
-			</div>
-		{/if}
-		{#if removedBgURL}
-			<div class="w-1/2 flex justify-start pl-10">
-				<img src={removedBgURL} alt="photoURL" width="256" height="256" />
-			</div>
-		{/if}
-	</div>
-
-	<div class="flex w-full justify-around items-center mt-12">
-		<div class={`w-1/2 flex ${removedBgURL ? 'justify-end' : 'justify-center'}`}>
-			<input
-				type="file"
-				accept="image/png"
-				class="file-input w-full max-w-xs"
-				on:change={makeRequest}
-			/>
+<div class="flex w-full">
+	{#if previewURL}
+		<div class="w-1/2 flex justify-end pr-16">
+			<img src={previewURL} alt="photoURL" width="256" height="256" />
 		</div>
-		{#if removedBgURL}
-			<div class="w-1/2 flex justify-start pl-28">
-				<button class="btn" on:click={downloadImage}> Download </button>
-			</div>
-		{/if}
+	{/if}
+	{#if removedBgURL}
+		<div class="w-1/2 flex justify-start pl-10">
+			<img src={removedBgURL} alt="photoURL" width="256" height="256" />
+		</div>
+	{/if}
+</div>
+
+<div class="flex w-full justify-around items-center mt-12">
+	<div class={`w-1/2 flex ${removedBgURL ? 'justify-end' : 'justify-center'}`}>
+		<input
+			type="file"
+			accept="image/png"
+			class="file-input w-full max-w-xs"
+			on:change={makeRequest}
+		/>
 	</div>
-</section>
+	{#if removedBgURL}
+		<div class="w-1/2 flex justify-start pl-28">
+			<button class="btn" on:click={downloadImage}> Download </button>
+		</div>
+	{/if}
+</div>

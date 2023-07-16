@@ -1,7 +1,12 @@
 <script lang="ts">
-	// export let data;
-	// let { supabase } = data;
-	// $: ({ supabase } = data);
+	import ImageDownload from './/components/ImageDownload.svelte';
+	import { userStore } from '$lib/supabase';
 </script>
 
-<h1>Home</h1>
+<section class="w-4/5 h-full flex flex-col justify-center items-center">
+	{#if $userStore}
+		<ImageDownload />
+	{:else}
+		<p>Please sign in to use this service</p>
+	{/if}
+</section>

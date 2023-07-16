@@ -21,8 +21,6 @@
 
 		return () => subscription.unsubscribe();
 	});
-
-	$: console.log('userStore ', $userStore);
 </script>
 
 <div class="w-screen h-screen">
