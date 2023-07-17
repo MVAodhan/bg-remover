@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { error, json } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 
 import Replicate from 'replicate';
 
@@ -19,7 +19,11 @@ export const POST: RequestHandler = async ({ request, locals: { supabase, getSes
 		.single();
 	if (!session || profile.credits <= 0) {
 		// the user is not signed in
-		throw error(401, { message: 'Unauthorized' });
+		return json({
+			message: 'You have insufficent credits to run this service',
+			image: null,
+			profile: null
+		});
 	}
 	const body = await request.json();
 
@@ -31,26 +35,27 @@ export const POST: RequestHandler = async ({ request, locals: { supabase, getSes
 			}
 		}
 	);
-
+	let newProfileData;
 	if (output) {
 		const credits = profile.credits;
 		const newCredits = credits - 1;
 
-		const { data, error } = await supabase
+		const { data: newProfile } = await supabase
 			.from('profiles')
 			.update({ credits: newCredits })
 			.eq('id', profile.id)
-			.select();
-
-		if (data) {
-			console.log(data);
-		}
-		if (error) {
-			console.log(error);
-		}
+			.select()
+			.single();
+		newProfileData = newProfile;
+		return json({
+			message: null,
+			image: output,
+			profile: newProfileData
+		});
 	}
-
 	return json({
-		image: output
+		message: null,
+		image: null,
+		profile: null
 	});
 };

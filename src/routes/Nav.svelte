@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { profileStore } from '$lib/profile';
 	import { userStore } from '$lib/supabase';
+	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	export let supabase: SupabaseClient;
-
-	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	async function signInWithGitHub() {
 		await supabase.auth.signInWithOAuth({
@@ -25,6 +25,9 @@
 		</div>
 		<div class="flex-none">
 			{#if $userStore}
+				{#if $profileStore}
+					<div class="mr-3">Credits: {$profileStore?.credits}</div>
+				{/if}
 				<div class="avatar">
 					<div class="w-10 rounded-full">
 						<img class="w-12 rounded-full" alt="avatar" src={avatarUrl} />
