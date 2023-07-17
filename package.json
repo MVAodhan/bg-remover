@@ -13,6 +13,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-netlify": "^2.0.8",
 		"@sveltejs/kit": "^1.20.4",
 		"@types/node": "^20.4.1",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
@@ -22,6 +23,8 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"i": "^0.3.7",
+		"npm": "^9.8.0",
 		"postcss": "^8.4.25",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
@@ -36,7 +39,6 @@
 	"dependencies": {
 		"@supabase/auth-helpers-sveltekit": "^0.10.1",
 		"@supabase/supabase-js": "^2.26.0",
-		"@upstash/qstash": "^0.3.6",
 		"replicate": "^0.12.3"
 	}
 }
