@@ -73,7 +73,7 @@
 		<div class={`w-1/2 flex ${removedBgURL ? 'justify-end' : 'justify-center'}`}>
 			<input
 				type="file"
-				accept="image/png, image/jpg"
+				accept="image/png, image/jpeg"
 				class="file-input w-full max-w-xs"
 				on:change={makeRequest}
 			/>

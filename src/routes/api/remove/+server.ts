@@ -28,7 +28,7 @@ export const POST: RequestHandler = async ({ request, locals: { supabase, getSes
 	const body = await request.json();
 
 	const output = await replicate.run(
-		'pollinations/modnet:da7d45f3b836795f945f221fc0b01a6d3ab7f5e163f13208948ad436001e2255',
+		'cjwbw/rembg:fb8af171cfa1616ddcf1242c093f9c46bcada5ad4cf6f2fbe8b81b330ec5c003',
 		{
 			input: {
 				image: body.image
